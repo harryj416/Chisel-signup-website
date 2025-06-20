@@ -46,4 +46,4 @@ The Stripe integration includes:
 - Success page (`/success`) with order confirmation
 - Cancel page (`/cancel`) with alternative options
 - Real payment processing with metadata tracking
-- Error handling and user feedback 
+- Error handling and user feedback # Chisel-signup-website
