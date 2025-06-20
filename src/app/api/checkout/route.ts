@@ -2,12 +2,20 @@ import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { STRIPE_CONFIG } from '@/lib/stripe-config'
 
-const stripe = new Stripe(STRIPE_CONFIG.secretKey!, {
-  apiVersion: '2025-05-28.basil',
-})
-
 export async function POST(request: NextRequest) {
   try {
+    // Initialize Stripe inside the function to avoid build-time errors
+    if (!STRIPE_CONFIG.secretKey) {
+      return NextResponse.json(
+        { error: 'Stripe secret key not configured' },
+        { status: 500 }
+      )
+    }
+
+    const stripe = new Stripe(STRIPE_CONFIG.secretKey, {
+      apiVersion: '2025-05-28.basil',
+    })
+
     const { email } = await request.json()
 
     if (!email) {
